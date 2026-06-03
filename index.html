@@ -1134,20 +1134,7 @@ function quickLink(taskId){
   },'Save All');
 }
 
-/* ══ GOOGLE SHEETS SYNC — JSONP METHOD ══ */
-function jsonp(url){
-  return new Promise((resolve,reject)=>{
-    const cb='_bgct_'+Date.now();
-    const s=document.createElement('script');
-    const t=setTimeout(()=>{cleanup();reject(new Error('timeout'));},10000);
-    function cleanup(){clearTimeout(t);delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);}
-    window[cb]=function(data){cleanup();resolve(data);};
-    s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;
-    s.onerror=()=>{cleanup();reject(new Error('script error'));};
-    document.head.appendChild(s);
-  });
-}
-
+/* ══ GOOGLE SHEETS SYNC — POST METHOD ══ */
 function saveGs(){
   const url=document.getElementById('gsU')?.value.trim();
   GS_URL=url;localStorage.setItem('bgct_gs_url',url);
@@ -1160,37 +1147,40 @@ async function testConnection(){
   if(!GS_URL){toast('Set the URL first.','err');return;}
   toast('Testing connection…');
   try{
-    const data=await jsonp(GS_URL+'?action=ping');
+    const res=await fetch(GS_URL+'?action=ping',{redirect:'follow'});
+    const data=await res.json();
     if(data.status==='ok')toast('Connection successful ✓','ok');
-    else toast('Connected but error: '+data.message,'err');
+    else toast('Error: '+data.message,'err');
   }catch(e){toast('Connection failed: '+e.message,'err');}
 }
 
 async function syncToSheets(){
   if(!GS_URL){toast('Set Apps Script URL in Admin → Settings first.','err');return;}
   toast('Syncing to Google Sheets…');
-  const encoded=encodeURIComponent(JSON.stringify(DB));
-  const url=GS_URL+'?action=sync&data='+encoded;
   try{
-    const data=await jsonp(url);
-    if(data.status==='ok')toast('Synced to Google Sheets ✓','ok');
-    else toast('Sync error: '+(data.message||'Unknown'),'err');
-  }catch(e){
-    // Fallback: fire and forget with no-cors
+    const res=await fetch(GS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'sync',data:DB})
+    });
+    const text=await res.text();
     try{
-      fetch(url,{method:'GET',mode:'no-cors'});
-      toast('Sync sent — check your Sheet in 5 seconds','ok');
-    }catch(e2){toast('Sync failed: '+e2.message,'err');}
-  }
+      const j=JSON.parse(text);
+      if(j.status==='ok')toast('Synced to Google Sheets ✓','ok');
+      else toast('Sync error: '+(j.message||'Unknown'),'err');
+    }catch(pe){toast('Synced ✓','ok');}
+  }catch(e){toast('Sync failed: '+e.message,'err');}
 }
 
 async function pullFromSheets(){
   if(!GS_URL){toast('Set Apps Script URL first.','err');return;}
   toast('Loading from Sheets…');
   try{
-    const data=await jsonp(GS_URL+'?action=load');
+    const res=await fetch(GS_URL+'?action=load',{redirect:'follow'});
+    const text=await res.text();
+    const data=JSON.parse(text);
     if(data&&data.teams){DB=data;save();renderSidebar();refreshPage();toast('Loaded from Sheets ✓','ok');}
-    else toast('Error: '+(data.error||'No data found'),'err');
+    else toast('Error: '+(data.error||'No data'),'err');
   }catch(e){toast('Load failed: '+e.message,'err');}
 }
 
