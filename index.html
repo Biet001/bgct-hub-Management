@@ -687,7 +687,6 @@ function bootApp(){
     const lspan=sbAdminBtn.querySelector('.sb-btn-label');
     if(lspan)lspan.textContent=currentUser.role==='admin'?'Admin Panel':'Settings';
   }
-  load();
   renderSidebar();
   goTab('home');
   document.addEventListener('keydown',e=>{
@@ -785,7 +784,8 @@ const IC={
   x:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
   warn:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
   subtask:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
-};['#2563EB','#0F172A','#1D4ED8','#1E40AF','#3B82F6','#0369A1','#0284C7','#0EA5E9','#1E3A5F','#60A5FA'];
+};
+const PAL=['#2563EB','#0F172A','#1D4ED8','#1E40AF','#3B82F6','#0369A1','#0284C7','#0EA5E9','#1E3A5F','#60A5FA'];
 
 /* ══ SAMPLE DATA ══ */
 const SAMPLE={
@@ -1433,6 +1433,7 @@ function handleSearch(q){
 
 /* ══ ADMIN ══ */
 function openAdmin(defTab='teams',preTeam=''){
+  if(!currentUser){toast('Please log in first.','err');return;}
   document.getElementById('mroot').innerHTML=`
   <div class="ov" id="ov" onclick="if(event.target.id==='ov')closeModal()">
     <div class="modal" style="max-width:680px">
