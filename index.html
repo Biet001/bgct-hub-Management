@@ -268,40 +268,121 @@ input,select,textarea{font-family:var(--ff)}
 .tdl-ico.linked{color:var(--blue)}
 .tdl-empty{padding:14px 18px;font-size:12px;color:var(--txt3);font-style:italic}
 
-/* ── DOC TILES ── */
-.type-section{margin-bottom:28px}
-.type-sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
-.type-sec-hd-l{display:flex;align-items:center;gap:10px}
-.type-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0}
+/* ── DOC TYPE CARDS (each type = one enclosed card) ── */
+.type-section{margin-bottom:18px}
+.type-card{
+  background:var(--surf);
+  border:1px solid var(--brd);
+  border-radius:16px;
+  overflow:hidden;
+  transition:box-shadow var(--t);
+}
+.type-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.18)}
+.type-card-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;
+  border-bottom:1px solid var(--brd);
+  background:var(--bg2);
+}
+.type-card-hd-l{display:flex;align-items:center;gap:10px}
+.type-color-bar{width:4px;height:28px;border-radius:3px;flex-shrink:0}
 .type-nm{font-size:13px;font-weight:700;color:var(--txt);letter-spacing:-.2px}
-.type-dc{font-size:11px;color:var(--txt3);font-weight:500}
+.type-dc{font-size:11px;color:var(--txt3);font-weight:500;margin-left:2px}
 .type-sec-hd-r{display:flex;gap:6px}
-.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.doc-tile{background:var(--surf);border:1px solid var(--brd);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-slow);display:flex;flex-direction:column;position:relative}
-.doc-tile:hover{box-shadow:var(--sh);transform:translateY(-2px);border-color:var(--brd2)}
-.dt-bar{position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
-.dt-body{padding:18px 18px 14px 22px;flex:1}
-.dt-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;background:var(--blue-l);color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.dt-title{font-size:13.5px;font-weight:700;color:var(--txt);letter-spacing:-.2px;margin-bottom:6px;line-height:1.4}
-.dt-desc{font-size:12px;color:var(--txt2);line-height:1.6}
-.dt-foot{padding:12px 18px 12px 22px;border-top:1px solid var(--brd);display:flex;gap:7px;background:var(--bg2)}
-.dt-open{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:8px;border-radius:8px;font-size:12px;font-weight:600;background:var(--blue);color:#fff;text-decoration:none;cursor:pointer;transition:all var(--t);font-family:var(--ff);border:none}
-.dt-open svg{width:13px;height:13px;stroke:#fff;fill:none}
+.type-card-body{padding:16px 18px 18px}
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+
+/* Doc tile — Option B: large icon left, content right */
+.doc-tile{
+  background:var(--surf);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  overflow:hidden;
+  transition:all var(--t);
+  display:flex;
+  flex-direction:row;
+  min-height:110px;
+}
+.doc-tile:hover{box-shadow:0 6px 24px rgba(0,0,0,.28);border-color:var(--brd2);transform:translateY(-1px)}
+.dt-icon-col{
+  width:72px;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-right:1px solid var(--brd);
+  position:relative;overflow:hidden;
+}
+.dt-icon-col::before{
+  content:'';position:absolute;inset:0;
+  opacity:.12;
+}
+.dt-icon-col svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.5;position:relative;z-index:1}
+.dt-content-col{
+  flex:1;min-width:0;
+  display:flex;flex-direction:column;
+  padding:14px 14px 12px;
+  gap:6px;
+}
+.dt-title{
+  font-size:12.5px;font-weight:700;color:var(--txt);
+  line-height:1.5;
+  word-break:break-word;overflow-wrap:break-word;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  flex:1;
+}
+.dt-desc{font-size:11px;color:var(--txt2);line-height:1.5}
+.dt-actions{
+  display:flex;align-items:center;gap:5px;
+  margin-top:auto;padding-top:8px;
+  border-top:1px solid var(--brd);
+}
+.dt-open{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  padding:6px 10px;border-radius:7px;
+  font-size:11px;font-weight:600;
+  background:var(--blue);color:#fff;
+  text-decoration:none;cursor:pointer;
+  transition:all var(--t);font-family:var(--ff);border:none;
+  white-space:nowrap;
+}
+.dt-open svg{width:11px;height:11px;stroke:#fff;fill:none;flex-shrink:0}
 .dt-open:hover{background:var(--blue-h)}
-.dt-open.no-link{background:transparent;color:var(--txt3);border:1px dashed var(--brd2)}
-.dt-open.no-link:hover{background:var(--blue-l);color:var(--blue);border-color:var(--blue)}
-.dt-icon-btn{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd);color:var(--txt3);cursor:pointer;transition:all var(--t);flex-shrink:0;background:var(--surf)}
-.dt-icon-btn svg{width:13px;height:13px;stroke:currentColor;fill:none}
-.dt-icon-btn:hover{background:var(--bg2);color:var(--txt);border-color:var(--brd2)}
-.dt-icon-btn.del:hover{background:rgba(239,68,68,.15);color:#FF5555;border-color:rgba(239,68,68,.35)}
-.dt-add-tile{background:transparent;border:1.5px dashed var(--brd2);border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;min-height:140px;cursor:pointer;transition:all var(--t)}
-.dt-add-tile:hover{border-color:var(--blue);background:var(--blue-l)}
-.dt-add-inner{text-align:center;color:var(--txt3);transition:color var(--t)}
+.dt-open.no-link{
+  background:transparent;color:var(--txt3);
+  border:1.5px dashed var(--brd2);font-size:10.5px;
+}
+.dt-open.no-link svg{stroke:currentColor}
+.dt-open.no-link:hover{background:rgba(37,99,235,.08);color:var(--blue);border-color:var(--blue)}
+.dt-icon-btn{
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--brd);color:var(--txt3);
+  cursor:pointer;transition:all var(--t);flex-shrink:0;background:transparent;
+}
+.dt-icon-btn svg{width:12px;height:12px;stroke:currentColor;fill:none}
+.dt-icon-btn:hover{background:var(--surf2);color:var(--txt);border-color:var(--brd2)}
+.dt-icon-btn.del:hover{background:rgba(239,68,68,.12);color:#FF5555;border-color:rgba(239,68,68,.3)}
+/* hide unused legacy elements */
+.dt-top-bar,.dt-card-body,.dt-foot,.dt-badge,.dt-link-status{display:none}
+
+/* Add tile */
+.dt-add-tile{
+  background:transparent;border:1.5px dashed var(--brd2);
+  border-radius:12px;min-height:110px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all var(--t);
+}
+.dt-add-tile:hover{border-color:var(--blue);background:rgba(37,99,235,.05)}
+.dt-add-inner{display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--txt3);transition:color var(--t);padding:0 14px;text-align:center}
 .dt-add-tile:hover .dt-add-inner{color:var(--blue)}
-.dt-add-circle{width:38px;height:38px;border-radius:50%;border:1.5px dashed var(--brd2);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;transition:all var(--t)}
-.dt-add-circle svg{width:16px;height:16px;stroke:currentColor;fill:none}
-.dt-add-tile:hover .dt-add-circle{border-color:var(--blue);background:var(--blue-l)}
-.dt-add-lbl{font-size:12px;font-weight:600}
+.dt-add-circle{
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px dashed var(--brd2);
+  display:flex;align-items:center;justify-content:center;
+  transition:all var(--t);
+}
+.dt-add-circle svg{width:15px;height:15px;stroke:currentColor;fill:none}
+.dt-add-tile:hover .dt-add-circle{border-color:var(--blue);background:rgba(37,99,235,.08)}
+.dt-add-lbl{font-size:11px;font-weight:600;line-height:1.4;word-break:break-word;overflow-wrap:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
 /* ── MAP ── */
 .map-wrap{background:var(--surf);border:1px solid var(--brd);border-radius:var(--r-lg);overflow:hidden;position:relative;height:calc(100vh - var(--top-h) - 120px);min-height:400px}
@@ -983,17 +1064,24 @@ function navRoot(){nav=[];renderSidebar();pushPage(pageTeams());}
 /* ══ HOME ══ */
 function pageHome(){
   const td=DB.tasks.length;
-  const tDocs=Object.values(DB.docTypes).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.length,0),0);
-  const linked=Object.values(DB.docTypes).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.filter(d=>d.link&&d.link!=='#').length,0),0);
+  const tDocs=Object.values(DB.docTypes).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.length,0),0)
+    +Object.values(DB.subDocTypes||{}).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.length,0),0);
+  const linked=Object.values(DB.docTypes).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.filter(d=>d.link&&d.link!=='#').length,0),0)
+    +Object.values(DB.subDocTypes||{}).reduce((s,ts)=>s+ts.reduce((s2,t)=>s2+t.docs.filter(d=>d.link&&d.link!=='#').length,0),0);
   const cards=DB.teams.map(team=>{
     const tasks=DB.tasks.filter(t=>t.teamId===team.id);
+    const teamDocs=tasks.reduce((sum,tk)=>{
+      const direct=(DB.docTypes[tk.id]||[]).reduce((s,dt)=>s+dt.docs.length,0);
+      const sub=(DB.subtasks||[]).filter(s=>s.taskId===tk.id).reduce((s2,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,s2),0);
+      return sum+direct+sub;
+    },0);
     const init=team.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     return`<div class="team-card" onclick="sbTeamClick('${team.id}')">
       <div class="tc-stripe" style="background:${team.color}"></div>
       <div class="tc-body">
         <div class="tc-top">
           <div class="tc-mono" style="background:${team.color}20;color:${team.color};border-color:${team.color}30">${init}</div>
-          <div><div class="tc-name">${team.name}</div><div class="tc-count">${tasks.length} tasks</div></div>
+          <div><div class="tc-name">${team.name}</div><div class="tc-count">${tasks.length} task${tasks.length!==1?'s':''} · ${teamDocs} doc${teamDocs!==1?'s':''}</div></div>
         </div>
         <div class="tc-chips">${tasks.slice(0,5).map(t=>`<span class="tc-chip">${t.name}</span>`).join('')}${tasks.length>5?`<span class="tc-chip">+${tasks.length-5}</span>`:''}</div>
       </div>
@@ -1022,13 +1110,18 @@ function pageHome(){
 function pageTeams(){
   const cards=DB.teams.map(team=>{
     const tasks=DB.tasks.filter(t=>t.teamId===team.id);
+    const teamDocs=tasks.reduce((sum,tk)=>{
+      const direct=(DB.docTypes[tk.id]||[]).reduce((s,dt)=>s+dt.docs.length,0);
+      const sub=(DB.subtasks||[]).filter(s=>s.taskId===tk.id).reduce((s2,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,s2),0);
+      return sum+direct+sub;
+    },0);
     const init=team.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     return`<div class="team-card" onclick="navTeam('${team.id}')">
       <div class="tc-stripe" style="background:${team.color}"></div>
       <div class="tc-body">
         <div class="tc-top">
           <div class="tc-mono" style="background:${team.color}20;color:${team.color};border-color:${team.color}30">${init}</div>
-          <div><div class="tc-name">${team.name}</div><div class="tc-count">${tasks.length} tasks</div></div>
+          <div><div class="tc-name">${team.name}</div><div class="tc-count">${tasks.length} task${tasks.length!==1?'s':''} · ${teamDocs} doc${teamDocs!==1?'s':''}</div></div>
         </div>
         <div class="tc-chips">${tasks.map(t=>`<span class="tc-chip">${t.name}</span>`).join('')}</div>
       </div>
@@ -1050,13 +1143,8 @@ function pageTeam(teamId){
   if(!team)return pageTeams();
   const tasks=DB.tasks.filter(t=>t.teamId===teamId);
   const cards=tasks.map(tk=>{
-    const types=DB.docTypes[tk.id]||[];
-    const docs=types.flatMap(t=>t.docs.map(d=>({...d,typeName:t.name,typeColor:t.color})));
-    const rows=docs.slice(0,3).map(d=>`<div class="tdl-row">
-      <span class="tdl-pill" style="background:${d.typeColor}20;color:${d.typeColor}">${d.typeName}</span>
-      <span class="tdl-name">${d.name}</span>
-      <span class="tdl-ico ${d.link&&d.link!=='#'?'linked':''}">${IC.link}</span>
-    </div>`).join('');
+    const subtasks=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);
+    const docCount=subtasks.reduce((sum,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,sum),0);
     return`<div class="task-card" onclick="navTask('${teamId}','${tk.id}')">
       <div class="task-card-hd">
         <div class="task-card-icon">${IC.folder}</div>
@@ -1064,8 +1152,15 @@ function pageTeam(teamId){
         <div class="task-card-arr">${IC.arr}</div>
       </div>
       <div class="task-doc-list">
-        ${rows||`<div class="tdl-empty">No documents yet — click to add</div>`}
-        ${docs.length>3?`<div style="padding:6px 18px;font-size:11px;color:var(--txt3)">+${docs.length-3} more…</div>`:''}
+        ${subtasks.length?subtasks.slice(0,3).map(st=>{
+          const dc=(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,0);
+          return`<div class="tdl-row">
+            <span class="tdl-pill" style="background:${team.color}20;color:${team.color}">SUB</span>
+            <span class="tdl-name">${st.name}</span>
+            <span class="tdl-ico" style="font-size:10px;color:var(--txt3);font-weight:600">${dc}d</span>
+          </div>`;
+        }).join(''):`<div class="tdl-empty">No subtasks yet — click to add</div>`}
+        ${subtasks.length>3?`<div style="padding:6px 18px;font-size:11px;color:var(--txt3)">+${subtasks.length-3} more…</div>`:''}
       </div>
     </div>`;
   }).join('');
@@ -1128,41 +1223,48 @@ function pageSubtask(teamId,taskId,subtaskId){
   if(!team||!task||!subtask)return pageTask(teamId,taskId);
   const types=DB.subDocTypes[subtaskId]||[];
   const totalDocs=types.reduce((s,t)=>s+t.docs.length,0);
+  const fileIcon=`<svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13,2 13,9 20,9"/></svg>`;
+  const linkIcon=`<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>`;
   const sections=types.map(dt=>{
     const tiles=dt.docs.map(doc=>`
     <div class="doc-tile">
-      <div class="dt-bar" style="background:${dt.color}"></div>
-      <div class="dt-body">
-        <div class="dt-badge" style="background:${dt.color}20;color:${dt.color}">${dt.name}</div>
+      <div class="dt-icon-col" style="background:${dt.color}14;color:${dt.color}">
+        <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13,2 13,9 20,9"/></svg>
+      </div>
+      <div class="dt-content-col">
         <div class="dt-title">${doc.name}</div>
         ${doc.desc?`<div class="dt-desc">${doc.desc}</div>`:''}
-      </div>
-      <div class="dt-foot">
-        ${doc.link&&doc.link!=='#'
-          ?`<a class="dt-open" href="${doc.link}" target="_blank" onclick="toast('Opening…','ok')">${IC.link} Open Document</a>`
-          :`<button class="dt-open no-link" onclick="quickLinkSub('${subtaskId}','${dt.id}','${doc.id}')">${IC.plus} Add Link</button>`}
-        <button class="dt-icon-btn" onclick="editDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Edit">${IC.edit}</button>
-        <button class="dt-icon-btn del" onclick="delDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Delete">${IC.trash}</button>
+        <div class="dt-actions">
+          ${doc.link&&doc.link!=='#'
+            ?`<a class="dt-open" href="${doc.link}" target="_blank" onclick="toast('Opening…','ok')">${IC.link} Open</a>`
+            :`<button class="dt-open no-link" onclick="quickLinkSub('${subtaskId}','${dt.id}','${doc.id}')">${IC.plus} Add Link</button>`}
+          <button class="dt-icon-btn" onclick="editDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Edit">${IC.edit}</button>
+          <button class="dt-icon-btn del" onclick="delDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Delete">${IC.trash}</button>
+        </div>
       </div>
     </div>`).join('');
     return`<div class="type-section">
-      <div class="type-sec-hd">
-        <div class="type-sec-hd-l">
-          <div class="type-dot" style="background:${dt.color}"></div>
-          <span class="type-nm">${dt.name}</span>
-          <span class="type-dc">${dt.docs.length} doc${dt.docs.length!==1?'s':''}</span>
+      <div class="type-card">
+        <div class="type-card-hd">
+          <div class="type-card-hd-l">
+            <div class="type-color-bar" style="background:${dt.color}"></div>
+            <span class="type-nm">${dt.name}</span>
+            <span class="type-dc">· ${dt.docs.length} doc${dt.docs.length!==1?'s':''}</span>
+          </div>
+          <div class="type-sec-hd-r">
+            <button class="btn-g btn-sm" onclick="addDocSub('${subtaskId}','${dt.id}')">${IC.plus} Add</button>
+            <button class="btn-d btn-sm" onclick="delTypeSub('${subtaskId}','${dt.id}')">${IC.trash}</button>
+          </div>
         </div>
-        <div class="type-sec-hd-r">
-          <button class="btn-g btn-sm" onclick="addDocSub('${subtaskId}','${dt.id}')">${IC.plus} Add</button>
-          <button class="btn-d btn-sm" onclick="delTypeSub('${subtaskId}','${dt.id}')">${IC.trash}</button>
-        </div>
-      </div>
-      <div class="doc-grid">
-        ${tiles}
-        <div class="dt-add-tile" onclick="addDocSub('${subtaskId}','${dt.id}')">
-          <div class="dt-add-inner">
-            <div class="dt-add-circle">${IC.plus}</div>
-            <div class="dt-add-lbl">Add ${dt.name}</div>
+        <div class="type-card-body">
+          <div class="doc-grid">
+            ${tiles}
+            <div class="dt-add-tile" onclick="addDocSub('${subtaskId}','${dt.id}')">
+              <div class="dt-add-inner">
+                <div class="dt-add-circle">${IC.plus}</div>
+                <div class="dt-add-lbl">Add ${dt.name}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1420,10 +1522,13 @@ function handleSearch(q){
   const results=[];
   DB.tasks.forEach(tk=>{
     const team=DB.teams.find(t=>t.id===tk.teamId);
-    (DB.docTypes[tk.id]||[]).forEach(dt=>{
-      dt.docs.forEach(doc=>{
-        if(doc.name.toLowerCase().includes(q)||dt.name.toLowerCase().includes(q)||tk.name.toLowerCase().includes(q)||team?.name.toLowerCase().includes(q))
-          results.push({team,task:tk,dt,doc});
+    // search subtask docs
+    (DB.subtasks||[]).filter(s=>s.taskId===tk.id).forEach(st=>{
+      (DB.subDocTypes[st.id]||[]).forEach(dt=>{
+        dt.docs.forEach(doc=>{
+          if(doc.name.toLowerCase().includes(q)||dt.name.toLowerCase().includes(q)||tk.name.toLowerCase().includes(q)||st.name.toLowerCase().includes(q)||team?.name.toLowerCase().includes(q))
+            results.push({team,task:tk,subtask:st,dt,doc});
+        });
       });
     });
     if((tk.name.toLowerCase().includes(q)||team?.name.toLowerCase().includes(q))&&!results.find(r=>r.task.id===tk.id&&!r.doc))
@@ -1432,7 +1537,9 @@ function handleSearch(q){
   if(!results.length){drop.innerHTML=`<div class="sd-empty">No results for "${q}"</div>`;return;}
   drop.innerHTML=results.slice(0,8).map(r=>{
     if(r.taskOnly)return`<div class="sd-item" onclick="navTask('${r.team?.id}','${r.task.id}');closeSearch()"><div class="sd-dot" style="background:${r.team?.color||'#2563EB'}"></div><div class="sd-body"><div class="sd-title">${r.task.name}</div><div class="sd-meta">${r.team?.name||''}</div></div><span class="sd-badge" style="background:#2563EB20;color:#2563EB">Task</span></div>`;
-    return`<div class="sd-item" onclick="${r.doc.link&&r.doc.link!=='#'?`window.open('${r.doc.link}','_blank');toast('Opening…','ok')`:`navTask('${r.team?.id}','${r.task.id}')`};closeSearch()"><div class="sd-dot" style="background:${r.dt?.color||'#2563EB'}"></div><div class="sd-body"><div class="sd-title">${r.doc.name}</div><div class="sd-meta">${r.team?.name||''} › ${r.task.name}</div></div><span class="sd-badge" style="background:${r.dt?.color||'#2563EB'}20;color:${r.dt?.color||'#2563EB'}">${r.dt?.name||''}</span></div>`;
+    const nav=r.subtask?`navSubtask('${r.team?.id}','${r.task.id}','${r.subtask.id}')`:`navTask('${r.team?.id}','${r.task.id}')`;
+    const meta=r.subtask?`${r.team?.name||''} › ${r.task.name} › ${r.subtask.name}`:`${r.team?.name||''} › ${r.task.name}`;
+    return`<div class="sd-item" onclick="${r.doc.link&&r.doc.link!=='#'?`window.open('${r.doc.link}','_blank');toast('Opening…','ok')`:`${nav}`};closeSearch()"><div class="sd-dot" style="background:${r.dt?.color||'#2563EB'}"></div><div class="sd-body"><div class="sd-title">${r.doc.name}</div><div class="sd-meta">${meta}</div></div><span class="sd-badge" style="background:${r.dt?.color||'#2563EB'}20;color:${r.dt?.color||'#2563EB'}">${r.dt?.name||''}</span></div>`;
   }).join('');
 }
 
@@ -1447,6 +1554,7 @@ function openAdmin(defTab='teams',preTeam=''){
         <div class="a-tabs">
           <button class="a-tab ${defTab==='teams'?'active':''}" onclick="aTab('teams',this)">${IC.users} Teams</button>
           <button class="a-tab ${defTab==='tasks'?'active':''}" onclick="aTab('tasks',this)">${IC.folder} Tasks</button>
+          <button class="a-tab ${defTab==='subtasks'?'active':''}" onclick="aTab('subtasks',this)">${IC.subtask} Subtasks</button>
           <button class="a-tab ${defTab==='docs'?'active':''}" onclick="aTab('docs',this)">${IC.file} Documents</button>
           <button class="a-tab ${defTab==='settings'?'active':''}" onclick="aTab('settings',this)">${IC.set} Settings</button>
         </div>
@@ -1465,6 +1573,16 @@ function openAdmin(defTab='teams',preTeam=''){
           <button class="btn-p btn-sm" onclick="addTask()" style="margin-bottom:20px">${IC.plus} Add Task</button>
           <hr class="hr" style="margin-top:0">
           <table class="dt-tbl"><thead><tr><th>Task</th><th>Team</th><th>Docs</th><th></th></tr></thead><tbody id="tkT">${tasksRows()}</tbody></table>
+        </div>
+        <div class="a-sec ${defTab==='subtasks'?'active':''}" id="as-subtasks">
+          <div class="f-g2">
+            <div class="f-row"><label class="f-label">Team</label><select class="f-sel" id="stTeam" onchange="loadAdminSubTasks()">${teamOpts()}</select></div>
+            <div class="f-row"><label class="f-label">Task</label><select class="f-sel" id="stTask"><option>Select team first</option></select></div>
+          </div>
+          <div class="f-row"><label class="f-label">Subtask Name</label><input class="f-input" id="stN" placeholder="e.g. Standard Process, Phase 1, Advanced…"></div>
+          <button class="btn-p btn-sm" onclick="addSubtaskAdmin()" style="margin-bottom:20px">${IC.plus} Add Subtask</button>
+          <hr class="hr" style="margin-top:0">
+          <table class="dt-tbl"><thead><tr><th>Subtask</th><th>Task</th><th>Team</th><th>Docs</th><th></th></tr></thead><tbody id="stT">${subtasksRows()}</tbody></table>
         </div>
         <div class="a-sec ${defTab==='docs'?'active':''}" id="as-docs">
           <div class="f-g2">
@@ -1514,7 +1632,7 @@ function openAdmin(defTab='teams',preTeam=''){
       </div>
     </div>
   </div>`;
-  setTimeout(()=>loadDocTasks(),100);
+  setTimeout(()=>{loadDocTasks();loadAdminSubTasks();},100);
 }
 function closeModal(){document.getElementById('mroot').innerHTML='';renderSidebar();refreshPage();}
 function aTab(tab,el){document.querySelectorAll('.a-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.a-sec').forEach(s=>s.classList.remove('active'));el.classList.add('active');document.getElementById('as-'+tab).classList.add('active');}
@@ -1522,8 +1640,13 @@ function pickChip(el,cid){document.querySelectorAll('#'+cid+' .chip').forEach(c=
 
 /* ══ CRUD ══ */
 function teamsRows(){return DB.teams.map(t=>`<tr><td><span class="color-dot" style="background:${t.color};margin-right:6px"></span><span class="td-p">${t.name}</span></td><td>${DB.tasks.filter(tk=>tk.teamId===t.id).length}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameTeam('${t.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delTeam('${t.id}')">${IC.trash}</button></div></td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No teams</td></tr>';}
-function tasksRows(){return DB.tasks.map(tk=>{const team=DB.teams.find(t=>t.id===tk.teamId);const dc=(DB.docTypes[tk.id]||[]).reduce((s,t)=>s+t.docs.length,0);return`<tr><td class="td-p">${tk.name}</td><td><span style="font-size:11px;background:${team?.color}20;color:${team?.color};padding:2px 8px;border-radius:4px;font-weight:600">${team?.name||''}</span></td><td>${dc}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameTask('${tk.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delTask('${tk.id}')">${IC.trash}</button></div></td></tr>`;}).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No tasks</td></tr>';}
+function tasksRows(){return DB.tasks.map(tk=>{const team=DB.teams.find(t=>t.id===tk.teamId);const direct=(DB.docTypes[tk.id]||[]).reduce((s,t)=>s+t.docs.length,0);const sub=(DB.subtasks||[]).filter(s=>s.taskId===tk.id).reduce((s2,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,s2),0);const dc=direct+sub;return`<tr><td class="td-p">${tk.name}</td><td><span style="font-size:11px;background:${team?.color}20;color:${team?.color};padding:2px 8px;border-radius:4px;font-weight:600">${team?.name||''}</span></td><td>${dc}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameTask('${tk.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delTask('${tk.id}')">${IC.trash}</button></div></td></tr>`;}).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No tasks</td></tr>';}
 function teamOpts(pre=''){return DB.teams.map(t=>`<option value="${t.id}" ${t.id===pre?'selected':''}>${t.name}</option>`).join('');}
+function subtasksRows(){return(DB.subtasks||[]).map(st=>{const task=DB.tasks.find(t=>t.id===st.taskId);const team=DB.teams.find(t=>t.id===task?.teamId);const dc=(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,0);return`<tr><td class="td-p">${st.name}</td><td><span style="font-size:11px;color:var(--txt2)">${task?.name||'—'}</span></td><td><span style="font-size:11px;background:${team?.color}20;color:${team?.color};padding:2px 8px;border-radius:4px;font-weight:600">${team?.name||'—'}</span></td><td>${dc}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameSubtaskAdmin('${st.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delSubtaskAdmin('${st.id}')">${IC.trash}</button></div></td></tr>`;}).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No subtasks</td></tr>';}
+function loadAdminSubTasks(){const tid=document.getElementById('stTeam')?.value;const tasks=DB.tasks.filter(t=>t.teamId===tid);const sel=document.getElementById('stTask');if(sel)sel.innerHTML=tasks.map(t=>`<option value="${t.id}">${t.name}</option>`).join('')||'<option>No tasks</option>';}
+function addSubtaskAdmin(){const tid=document.getElementById('stTask')?.value;const name=document.getElementById('stN')?.value.trim();if(!tid||!name){toast('Select a task and enter a name.','err');return;}if(!DB.subtasks)DB.subtasks=[];if(!DB.subDocTypes)DB.subDocTypes={};const id='st'+Date.now();DB.subtasks.push({id,taskId:tid,name});DB.subDocTypes[id]=seedTypes(id);save();document.getElementById('stN').value='';const stb=document.getElementById('stT');if(stb)stb.innerHTML=subtasksRows();renderSidebar();toast('Subtask added!','ok');}
+function renameSubtaskAdmin(id){const st=(DB.subtasks||[]).find(s=>s.id===id);if(!st)return;const n=prompt('Rename subtask:',st.name);if(n&&n.trim()){st.name=n.trim();save();const stb=document.getElementById('stT');if(stb)stb.innerHTML=subtasksRows();renderSidebar();toast('Renamed!','ok');}}
+function delSubtaskAdmin(id){if(!confirm('Delete this subtask and all its documents?'))return;DB.subtasks=(DB.subtasks||[]).filter(s=>s.id!==id);delete DB.subDocTypes[id];save();const stb=document.getElementById('stT');if(stb)stb.innerHTML=subtasksRows();renderSidebar();toast('Deleted.','ok');}
 function loadDocTasks(){const tid=document.getElementById('dTs')?.value;const tasks=DB.tasks.filter(t=>t.teamId===tid);const sel=document.getElementById('dTks');if(sel)sel.innerHTML=tasks.map(t=>`<option value="${t.id}">${t.name}</option>`).join('')||'<option>No tasks</option>';loadDocTypes();}
 function loadDocTypes(){const tkid=document.getElementById('dTks')?.value;const sel=document.getElementById('dDts');if(!sel||!tkid)return;const types=DB.docTypes[tkid]||[];sel.innerHTML=types.map(dt=>`<option value="${dt.id}">${dt.name}</option>`).join('')||'<option>No types</option>';loadDocList();}
 function loadDocList(){
@@ -1546,10 +1669,10 @@ function loadDocList(){
 
 function addTeam(){const name=document.getElementById('aN')?.value.trim();if(!name){toast('Enter a name.','err');return;}if(DB.teams.find(t=>t.name.toLowerCase()===name.toLowerCase())){toast('Already exists.','err');return;}const chip=document.querySelector('#aC .chip.sel');DB.teams.push({id:'t'+Date.now(),name,color:chip?chip.dataset.c:PAL[0]});save();document.getElementById('aN').value='';const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();toast('Team added!','ok');}
 function renameTeam(id){const team=DB.teams.find(t=>t.id===id);if(!team)return;const n=prompt('Rename team:',team.name);if(n&&n.trim()){team.name=n.trim();save();const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();toast('Renamed!','ok');}}
-function delTeam(id){if(!confirm('Delete team and all its tasks/docs?'))return;DB.tasks.filter(t=>t.teamId===id).forEach(t=>{delete DB.docTypes[t.id];});DB.tasks=DB.tasks.filter(t=>t.teamId!==id);DB.teams=DB.teams.filter(t=>t.id!==id);save();const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Deleted.','ok');}
+function delTeam(id){if(!confirm('Delete team and all its tasks/subtasks/docs?'))return;const teamTasks=DB.tasks.filter(t=>t.teamId===id);teamTasks.forEach(t=>{delete DB.docTypes[t.id];(DB.subtasks||[]).filter(s=>s.taskId===t.id).forEach(st=>{delete DB.subDocTypes[st.id];});});DB.subtasks=(DB.subtasks||[]).filter(s=>!teamTasks.find(t=>t.id===s.taskId));DB.tasks=DB.tasks.filter(t=>t.teamId!==id);DB.teams=DB.teams.filter(t=>t.id!==id);save();const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();const stb=document.getElementById('stT');if(stb)stb.innerHTML=subtasksRows();toast('Deleted.','ok');}
 function addTask(){const tid=document.getElementById('tkTs')?.value;const name=document.getElementById('tkN')?.value.trim();if(!tid||!name){toast('Select team and enter name.','err');return;}const id='tk'+Date.now();DB.tasks.push({id,teamId:tid,name});DB.docTypes[id]=seedTypes(id);save();document.getElementById('tkN').value='';const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Task added!','ok');}
 function renameTask(id){const tk=DB.tasks.find(t=>t.id===id);if(!tk)return;const n=prompt('Rename task:',tk.name);if(n&&n.trim()){tk.name=n.trim();save();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Renamed!','ok');}}
-function delTask(id){if(!confirm('Delete task and all its docs?'))return;delete DB.docTypes[id];DB.tasks=DB.tasks.filter(t=>t.id!==id);save();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Deleted.','ok');}
+function delTask(id){if(!confirm('Delete task and all its subtasks/docs?'))return;(DB.subtasks||[]).filter(s=>s.taskId===id).forEach(s=>{delete DB.subDocTypes[s.id];});DB.subtasks=(DB.subtasks||[]).filter(s=>s.taskId!==id);delete DB.docTypes[id];DB.tasks=DB.tasks.filter(t=>t.id!==id);save();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();const stb=document.getElementById('stT');if(stb)stb.innerHTML=subtasksRows();toast('Deleted.','ok');}
 function addDocAdmin(){const tkid=document.getElementById('dTks')?.value;const dtid=document.getElementById('dDts')?.value;const name=document.getElementById('dN')?.value.trim();const link=document.getElementById('dL')?.value.trim();const desc=document.getElementById('dDe')?.value.trim();if(!tkid||!dtid||!name){toast('Fill required fields.','err');return;}const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);if(!dt){toast('Invalid type.','err');return;}dt.docs.push({id:'doc'+Date.now(),name,link:link||'#',desc:desc||''});save();['dN','dL','dDe'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});loadDocList();toast('Document added!','ok');}
 function editDocAdmin(tkid,dtid,docId){
   const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);
