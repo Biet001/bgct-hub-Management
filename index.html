@@ -471,8 +471,37 @@ input,select,textarea{font-family:var(--ff)}
 .logout-btn svg{width:13px;height:13px;stroke:currentColor;fill:none}
 .logout-btn:hover{background:rgba(239,68,68,.08);color:#EF4444;border-color:rgba(239,68,68,.25);}
 
-/* sync status */
-.sync-status{
+/* ── SUBTASK GRID ── */
+.subtask-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:8px}
+.subtask-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:14px;padding:18px 18px 14px;cursor:pointer;transition:all var(--t);position:relative;overflow:hidden}
+.subtask-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--sc-color,#2563EB);border-radius:4px 0 0 4px}
+.subtask-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--sh)}
+.subtask-card-name{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:6px;padding-left:4px}
+.subtask-card-meta{font-size:11.5px;color:var(--txt2);padding-left:4px;display:flex;align-items:center;gap:10px}
+.subtask-card-add{display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--brd2);border-radius:14px;padding:28px 18px;cursor:pointer;color:var(--txt3);font-size:13px;font-weight:500;transition:all var(--t)}
+.subtask-card-add:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
+
+/* ── FULLSCREEN MAP ── */
+#fsmapOverlay{position:fixed;inset:0;z-index:5000;background:var(--bg);display:flex;flex-direction:column;animation:fsmIn .25s ease}
+@keyframes fsmIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+.fsmap-header{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--brd);flex-shrink:0;background:var(--surf)}
+.fsmap-back{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;color:var(--txt2);border:1.5px solid var(--brd);cursor:pointer;transition:all var(--t);background:transparent;font-family:var(--ff)}
+.fsmap-back:hover{background:var(--surf2);color:var(--txt);border-color:var(--brd2)}
+.fsmap-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
+.fsmap-title{font-size:17px;font-weight:700;color:var(--txt)}
+.fsmap-sub{font-size:12px;color:var(--txt3);margin-left:2px}
+.fsmap-team-tabs{display:flex;align-items:center;gap:8px;padding:12px 22px;border-bottom:1px solid var(--brd);flex-shrink:0;overflow-x:auto;background:var(--bg)}
+.fsmap-team-tabs::-webkit-scrollbar{height:2px}
+.fsmap-tab{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap;font-family:var(--ff);background:transparent}
+.fsmap-tab:hover{background:var(--surf2)}
+.fsmap-tab.active{border-color:currentColor}
+.fsmap-ctrl{display:flex;align-items:center;gap:8px;padding:10px 22px;border-bottom:1px solid var(--brd);flex-shrink:0;background:var(--bg2)}
+.fsmap-ctrl .btn-g{font-size:12px;padding:6px 12px}
+.fsmap-wrap{flex:1;position:relative;overflow:hidden}
+.fsmap-wrap svg{width:100%;height:100%;display:block}
+.fsmap-tt{position:absolute;pointer-events:none;background:var(--surf);border:1px solid var(--brd);border-radius:10px;padding:10px 14px;font-size:12px;display:none;z-index:50;min-width:140px;box-shadow:var(--sh)}
+.fsmap-tt.show{display:block}
+.fsmap-info{position:absolute;bottom:14px;right:14px;background:var(--surf);border:1px solid var(--brd);border-radius:8px;padding:5px 12px;font-size:11px;color:var(--txt2);font-weight:500}
   display:flex;align-items:center;gap:8px;
   padding:10px 14px;border-radius:9px;
   font-size:12px;font-weight:500;
@@ -755,9 +784,8 @@ const IC={
   sync:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>`,
   x:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
   warn:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-};
-
-const PAL=['#2563EB','#0F172A','#1D4ED8','#1E40AF','#3B82F6','#0369A1','#0284C7','#0EA5E9','#1E3A5F','#60A5FA'];
+  subtask:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
+};['#2563EB','#0F172A','#1D4ED8','#1E40AF','#3B82F6','#0369A1','#0284C7','#0EA5E9','#1E3A5F','#60A5FA'];
 
 /* ══ SAMPLE DATA ══ */
 const SAMPLE={
@@ -798,7 +826,9 @@ const SAMPLE={
     {id:'tk23',teamId:'t9',name:'Strategy'},
     {id:'tk24',teamId:'t9',name:'KPI Dashboard'},
   ],
-  docTypes:{}
+  docTypes:{},
+  subtasks:[],
+  subDocTypes:{}
 };
 function seedTypes(id){return[
   {id:'dt_bp_'+id,name:'Best Practice',color:'#2563EB',docs:[]},
@@ -819,7 +849,7 @@ let mapS={x:0,y:0,scale:1,pan:false,px:0,py:0,ox:0,oy:0};
 function save(){localStorage.setItem('bgct_v4',JSON.stringify(DB));}
 function load(){
   const r=localStorage.getItem('bgct_v4');
-  if(r){try{DB=JSON.parse(r);return;}catch(e){}}
+  if(r){try{DB=JSON.parse(r);if(!DB.subtasks)DB.subtasks=[];if(!DB.subDocTypes)DB.subDocTypes={};return;}catch(e){}}
   DB=JSON.parse(JSON.stringify(SAMPLE));
   DB.tasks.forEach(tk=>{if(!DB.docTypes[tk.id])DB.docTypes[tk.id]=seedTypes(tk.id);});
   save();
@@ -853,6 +883,7 @@ function renderSidebar(filter=''){
   const el=document.getElementById('sbScroll');
   const TI=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`;
   const FI=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13,2 13,9 20,9"/></svg>`;
+  const STI=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`;
   let html='';
   DB.teams.forEach(team=>{
     const tasks=DB.tasks.filter(t=>t.teamId===team.id);
@@ -867,12 +898,24 @@ function renderSidebar(filter=''){
         <span class="sn-cnt">${tasks.length}</span>
       </div>
       <div class="sn-children ${isOpen?'open':''}" id="snc-${team.id}">
-        ${match.map(tk=>`
-        <div class="sn-task-row ${nav.some(n=>n.taskId===tk.id)?'active':''}" onclick="sbTaskClick('${team.id}','${tk.id}')">
+        ${match.map(tk=>{
+          const subtasks=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);
+          const taskActive=nav.some(n=>n.taskId===tk.id);
+          const stOpen=q||nav.some(n=>n.taskId===tk.id);
+          return`
+        <div class="sn-task-row ${taskActive&&nav[nav.length-1]?.type==='task'?'active':''}" onclick="sbTaskClick('${team.id}','${tk.id}')">
           <div class="sn-task-file-icon">${FI}</div>
           <span class="sn-task-name">${tk.name}</span>
           <button class="sn-task-add" onclick="event.stopPropagation();quickLink('${tk.id}')" title="Edit links">${IC.plus}</button>
-        </div>`).join('')}
+        </div>
+        ${subtasks.length?`<div class="sn-children ${stOpen?'open':''}" style="padding-left:18px" id="snst-${tk.id}">
+          ${subtasks.map(st=>`
+          <div class="sn-task-row ${nav.some(n=>n.subtaskId===st.id)?'active':''}" onclick="sbSubtaskClick('${team.id}','${tk.id}','${st.id}')">
+            <div class="sn-task-file-icon" style="opacity:.7">${STI}</div>
+            <span class="sn-task-name" style="font-size:11.5px">${st.name}</span>
+          </div>`).join('')}
+        </div>`:''}`;
+        }).join('')}
         <div class="sn-task-row" onclick="addTaskSb('${team.id}')">
           <div class="sn-task-file-icon" style="opacity:.3">${IC.plus}</div>
           <span class="sn-task-name" style="opacity:.4;font-style:italic">Add task</span>
@@ -892,12 +935,13 @@ function toggleTeam(teamId,rowEl){
 }
 function sbTeamClick(teamId){curTab='tree';syncTabUI();nav=[{type:'team',teamId}];renderSidebar(document.getElementById('sbSearch').value);pushPage(pageTeam(teamId));}
 function sbTaskClick(teamId,taskId){curTab='tree';syncTabUI();nav=[{type:'team',teamId},{type:'task',teamId,taskId}];renderSidebar(document.getElementById('sbSearch').value);pushPage(pageTask(teamId,taskId));}
+function sbSubtaskClick(teamId,taskId,subtaskId){curTab='tree';syncTabUI();nav=[{type:'team',teamId},{type:'task',teamId,taskId},{type:'subtask',teamId,taskId,subtaskId}];renderSidebar(document.getElementById('sbSearch').value);pushPage(pageSubtask(teamId,taskId,subtaskId));}
 
 /* ══ TABS ══ */
 function goTab(tab,el=null){
   curTab=tab;syncTabUI();
   if(tab==='home'){nav=[];renderSidebar();pushPage(pageHome());}
-  else if(tab==='tree'){if(!nav.length)pushPage(pageTeams());else{const l=nav[nav.length-1];if(l.type==='team')pushPage(pageTeam(l.teamId));if(l.type==='task')pushPage(pageTask(l.teamId,l.taskId));}}
+  else if(tab==='tree'){if(!nav.length)pushPage(pageTeams());else{const l=nav[nav.length-1];if(l.type==='team')pushPage(pageTeam(l.teamId));if(l.type==='task')pushPage(pageTask(l.teamId,l.taskId));if(l.type==='subtask')pushPage(pageSubtask(l.teamId,l.taskId,l.subtaskId));}}
   else if(tab==='map'){pushPage(pageMapContainer());setTimeout(renderMap,80);}
 }
 function syncTabUI(){document.querySelectorAll('.ttab').forEach(t=>t.classList.remove('active'));const el=document.getElementById('tb-'+curTab);if(el)el.classList.add('active');}
@@ -918,6 +962,7 @@ function refreshPage(){
   const l=nav[nav.length-1];
   if(l.type==='team')pushPage(pageTeam(l.teamId));
   if(l.type==='task')pushPage(pageTask(l.teamId,l.taskId));
+  if(l.type==='subtask')pushPage(pageSubtask(l.teamId,l.taskId,l.subtaskId));
 }
 function bc(items){
   return`<div class="breadcrumb">${items.map((it,i)=>{
@@ -927,6 +972,7 @@ function bc(items){
 }
 function navTeam(tid){nav=[{type:'team',teamId:tid}];renderSidebar();pushPage(pageTeam(tid));}
 function navTask(tid,tkid){nav=[{type:'team',teamId:tid},{type:'task',teamId:tid,taskId:tkid}];renderSidebar();pushPage(pageTask(tid,tkid));}
+function navSubtask(tid,tkid,stid){nav=[{type:'team',teamId:tid},{type:'task',teamId:tid,taskId:tkid},{type:'subtask',teamId:tid,taskId:tkid,subtaskId:stid}];renderSidebar();pushPage(pageSubtask(tid,tkid,stid));}
 function navRoot(){nav=[];renderSidebar();pushPage(pageTeams());}
 
 /* ══ HOME ══ */
@@ -1038,7 +1084,44 @@ function pageTask(teamId,taskId){
   const team=DB.teams.find(t=>t.id===teamId);
   const task=DB.tasks.find(t=>t.id===taskId);
   if(!team||!task)return pageTeam(teamId);
-  const types=DB.docTypes[taskId]||[];
+  const subtasks=(DB.subtasks||[]).filter(s=>s.taskId===taskId);
+  const totalDocs=subtasks.reduce((sum,st)=>{
+    return sum+(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,0);
+  },0);
+  const cards=subtasks.map(st=>{
+    const types=DB.subDocTypes[st.id]||[];
+    const docCount=types.reduce((s,dt)=>s+dt.docs.length,0);
+    const typeCount=types.length;
+    return`<div class="subtask-card" style="--sc-color:${team.color}" onclick="navSubtask('${teamId}','${taskId}','${st.id}')">
+      <div class="subtask-card-name">${st.name}</div>
+      <div class="subtask-card-meta">
+        <span>${typeCount} type${typeCount!==1?'s':''}</span>
+        <span style="opacity:.4">·</span>
+        <span>${docCount} doc${docCount!==1?'s':''}</span>
+      </div>
+    </div>`;
+  }).join('');
+  const addCard=`<div class="subtask-card-add" onclick="addSubtask('${teamId}','${taskId}')">
+    <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--brd2)">${IC.plus}</span>
+    Add Subtask
+  </div>`;
+  return`
+  ${bc([{label:'Home',click:"goTab('home')"},{label:'All Teams',click:'navRoot()'},{label:team.name,click:`navTeam('${teamId}')`},{label:task.name}])}
+  <div class="pg-hd">
+    <div class="pg-hd-l"><h1>${task.name}</h1><p>${team.name} · ${subtasks.length} subtask${subtasks.length!==1?'s':''} · ${totalDocs} documents</p></div>
+    <div class="pg-hd-r">
+      <button class="btn-p btn-sm" onclick="addSubtask('${teamId}','${taskId}')">${IC.plus} Add Subtask</button>
+    </div>
+  </div>
+  ${subtasks.length===0?emptyState('No subtasks yet','Click "Add Subtask" to create a subtask — e.g. Standard Process, Advanced Process…'):`<div class="subtask-grid">${cards}${addCard}</div>`}`;
+}
+
+function pageSubtask(teamId,taskId,subtaskId){
+  const team=DB.teams.find(t=>t.id===teamId);
+  const task=DB.tasks.find(t=>t.id===taskId);
+  const subtask=(DB.subtasks||[]).find(s=>s.id===subtaskId);
+  if(!team||!task||!subtask)return pageTask(teamId,taskId);
+  const types=DB.subDocTypes[subtaskId]||[];
   const totalDocs=types.reduce((s,t)=>s+t.docs.length,0);
   const sections=types.map(dt=>{
     const tiles=dt.docs.map(doc=>`
@@ -1052,9 +1135,9 @@ function pageTask(teamId,taskId){
       <div class="dt-foot">
         ${doc.link&&doc.link!=='#'
           ?`<a class="dt-open" href="${doc.link}" target="_blank" onclick="toast('Opening…','ok')">${IC.link} Open Document</a>`
-          :`<button class="dt-open no-link" onclick="quickLink('${taskId}','${dt.id}','${doc.id}')">${IC.plus} Add Link</button>`}
-        <button class="dt-icon-btn" onclick="editDoc('${taskId}','${dt.id}','${doc.id}')" title="Edit">${IC.edit}</button>
-        <button class="dt-icon-btn del" onclick="delDoc('${taskId}','${dt.id}','${doc.id}')" title="Delete">${IC.trash}</button>
+          :`<button class="dt-open no-link" onclick="quickLinkSub('${subtaskId}','${dt.id}','${doc.id}')">${IC.plus} Add Link</button>`}
+        <button class="dt-icon-btn" onclick="editDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Edit">${IC.edit}</button>
+        <button class="dt-icon-btn del" onclick="delDocSub('${subtaskId}','${dt.id}','${doc.id}')" title="Delete">${IC.trash}</button>
       </div>
     </div>`).join('');
     return`<div class="type-section">
@@ -1065,13 +1148,13 @@ function pageTask(teamId,taskId){
           <span class="type-dc">${dt.docs.length} doc${dt.docs.length!==1?'s':''}</span>
         </div>
         <div class="type-sec-hd-r">
-          <button class="btn-g btn-sm" onclick="addDoc('${taskId}','${dt.id}')">${IC.plus} Add</button>
-          <button class="btn-d btn-sm" onclick="delType('${taskId}','${dt.id}')">${IC.trash}</button>
+          <button class="btn-g btn-sm" onclick="addDocSub('${subtaskId}','${dt.id}')">${IC.plus} Add</button>
+          <button class="btn-d btn-sm" onclick="delTypeSub('${subtaskId}','${dt.id}')">${IC.trash}</button>
         </div>
       </div>
       <div class="doc-grid">
         ${tiles}
-        <div class="dt-add-tile" onclick="addDoc('${taskId}','${dt.id}')">
+        <div class="dt-add-tile" onclick="addDocSub('${subtaskId}','${dt.id}')">
           <div class="dt-add-inner">
             <div class="dt-add-circle">${IC.plus}</div>
             <div class="dt-add-lbl">Add ${dt.name}</div>
@@ -1081,27 +1164,33 @@ function pageTask(teamId,taskId){
     </div>`;
   }).join('');
   return`
-  ${bc([{label:'Home',click:"goTab('home')"},{label:'All Teams',click:'navRoot()'},{label:team.name,click:`navTeam('${teamId}')`},{label:task.name}])}
+  ${bc([{label:'Home',click:"goTab('home')"},{label:'All Teams',click:'navRoot()'},{label:team.name,click:`navTeam('${teamId}')`},{label:task.name,click:`navTask('${teamId}','${taskId}')`},{label:subtask.name}])}
   <div class="pg-hd">
-    <div class="pg-hd-l"><h1>${task.name}</h1><p>${team.name} · ${totalDocs} documents · ${types.length} types</p></div>
+    <div class="pg-hd-l">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="font-size:11px;font-weight:700;background:${team.color}20;color:${team.color};padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em">Subtask</span>
+      </div>
+      <h1>${subtask.name}</h1>
+      <p>${task.name} · ${team.name} · ${totalDocs} documents · ${types.length} types</p>
+    </div>
     <div class="pg-hd-r">
-      <button class="btn-g btn-sm" onclick="addType('${taskId}')">${IC.plus} New Type</button>
-      <button class="btn-p btn-sm" onclick="addDoc('${taskId}',null)">${IC.plus} Add Document</button>
+      <button class="btn-g btn-sm" onclick="addTypeSub('${subtaskId}')">${IC.plus} New Type</button>
+      <button class="btn-p btn-sm" onclick="addDocSub('${subtaskId}',null)">${IC.plus} Add Document</button>
+      <button class="btn-d btn-sm" onclick="delSubtask('${teamId}','${taskId}','${subtaskId}')">${IC.trash} Delete</button>
     </div>
   </div>
   ${sections||emptyState('No document types','Click "New Type" to create a category — BGCT, SOP, Policy, etc.')}`;
 }
-
-/* ══ MAP ══ */
 function pageMapContainer(){
   return`
-  <div class="pg-hd"><div class="pg-hd-l"><h1>Knowledge Map</h1><p>Visual overview. Click nodes to navigate.</p></div></div>
+  <div class="pg-hd"><div class="pg-hd-l"><h1>Knowledge Map</h1><p>Visual overview of all teams. Click a team node or team tab to explore in depth.</p></div>
+  <div class="pg-hd-r"><button class="btn-p btn-sm" onclick="openFullscreenMap(null)">${IC.arr} Open Full Map</button></div></div>
   <div class="map-ctrl">
     <button class="btn-g btn-sm" onclick="mapZoom(1.2)">+ Zoom In</button>
     <button class="btn-g btn-sm" onclick="mapZoom(0.83)">− Zoom Out</button>
     <button class="btn-g btn-sm" onclick="mapReset()">Reset</button>
     <button class="btn-g btn-sm" onclick="mapFit()">Fit All</button>
-    <span style="margin-left:auto;font-size:12px;color:var(--txt3)">Scroll to zoom · Drag to pan · Click nodes</span>
+    <span style="margin-left:auto;font-size:12px;color:var(--txt3)">Click team node → fullscreen team map</span>
   </div>
   <div class="map-wrap">
     <svg id="mapSvg"></svg>
@@ -1154,12 +1243,10 @@ function renderMap(){
     <text x="${rp.x}" y="${rp.y+12}" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.7)" font-family="DM Sans,system-ui">Hub</text>
   </g>`;
   teams.forEach(team=>{
-    const tp=pos[team.id];
-    const tasks=DB.tasks.filter(t=>t.teamId===team.id);
-    const label=team.name.length>15?team.name.substring(0,13)+'…':team.name;
-    const bW=Math.max(100,label.length*7.2+28);
-    const safe=team.name.replace(/'/g,"\\'");
-    c+=`<g style="cursor:pointer" onclick="mapClickTeam('${team.id}')" onmouseenter="showTT(event,'${safe}','${tasks.length} tasks')" onmouseleave="hideTT()">
+    const tp=pos[team.id];const tasks=DB.tasks.filter(t=>t.teamId===team.id);
+    const label=team.name.length>15?team.name.substring(0,13)+'...':team.name;
+    const bW=Math.max(100,label.length*7.2+28);const safe=team.name.replace(/'/g,"\\'");
+    c+=`<g style="cursor:pointer" onclick="openFullscreenMap('${team.id}')" onmouseenter="showTT(event,'${safe}','${tasks.length} tasks')" onmouseleave="hideTT()">
       <rect x="${tp.x-bW/2}" y="${tp.y-18}" width="${bW}" height="36" rx="10" fill="${team.color}18" stroke="${team.color}" stroke-width="1.8"/>
       <text x="${tp.x}" y="${tp.y+5}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${team.color}" font-family="DM Sans,system-ui">${label}</text>
     </g>`;
@@ -1167,10 +1254,10 @@ function renderMap(){
   teams.forEach(team=>{
     DB.tasks.filter(t=>t.teamId===team.id).forEach(tk=>{
       const kp=pos[tk.id];
-      const dc=(DB.docTypes[tk.id]||[]).reduce((s,t)=>s+t.docs.length,0);
-      const label=tk.name.length>16?tk.name.substring(0,14)+'…':tk.name;
-      const bW=Math.max(72,label.length*6.5+20);
-      const safe=tk.name.replace(/'/g,"\\'");
+      const subs=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);
+      const dc=subs.reduce((sum,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,sum),0);
+      const label=tk.name.length>16?tk.name.substring(0,14)+'...':tk.name;
+      const bW=Math.max(72,label.length*6.5+20);const safe=tk.name.replace(/'/g,"\\'");
       const filled=dc>0;
       c+=`<g style="cursor:pointer" onclick="mapClickTask('${team.id}','${tk.id}')" onmouseenter="showTT(event,'${safe}','${dc} doc${dc!==1?'s':''}')" onmouseleave="hideTT()">
         <rect x="${kp.x-bW/2}" y="${kp.y-13}" width="${bW}" height="26" rx="7"
@@ -1193,10 +1280,129 @@ function applyMap(){const g=document.getElementById('mapG');if(g)g.setAttribute(
 function mapZoom(f){mapS.scale=Math.max(.15,Math.min(3,mapS.scale*f));applyMap();}
 function mapReset(){mapS.x=0;mapS.y=0;mapS.scale=1;applyMap();}
 function mapFit(){mapS.x=20;mapS.y=0;mapS.scale=.78;applyMap();}
-function mapClickTeam(tid){sbTeamClick(tid);}
 function mapClickTask(tid,tkid){navTask(tid,tkid);}
+
+/* FULLSCREEN MAP */
+let fsmState={x:0,y:0,scale:1,pan:false,px:0,py:0,ox:0,oy:0,teamId:null};
+function openFullscreenMap(teamId){
+  fsmState={x:0,y:0,scale:1,pan:false,px:0,py:0,ox:0,oy:0,teamId};
+  const overlay=document.createElement('div');
+  overlay.id='fsmapOverlay';
+  const teamTabs=DB.teams.map(t=>`<button class="fsmap-tab ${t.id===teamId?'active':''}" style="color:${t.color};${t.id===teamId?`border-color:${t.color};background:${t.color}15`:''}" onclick="fsmSelectTeam('${t.id}',this)">${t.name}</button>`).join('');
+  overlay.innerHTML=`
+    <div class="fsmap-header">
+      <button class="fsmap-back" onclick="closeFullscreenMap()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,18 9,12 15,6"/></svg>
+        Back
+      </button>
+      <div style="flex:1">
+        <div class="fsmap-title">Knowledge Map</div>
+        <div class="fsmap-sub">Select a team tab to see its full tree · Drag to pan · Scroll to zoom · Click nodes to navigate</div>
+      </div>
+    </div>
+    <div class="fsmap-team-tabs">
+      <button class="fsmap-tab ${!teamId?'active':''}" style="color:var(--blue);${!teamId?'border-color:var(--blue);background:rgba(37,99,235,.1)':''}" onclick="fsmSelectTeam(null,this)">All Teams</button>
+      ${teamTabs}
+    </div>
+    <div class="fsmap-ctrl">
+      <button class="btn-g btn-sm" onclick="fsmZoom(1.2)">+ Zoom In</button>
+      <button class="btn-g btn-sm" onclick="fsmZoom(0.83)">- Zoom Out</button>
+      <button class="btn-g btn-sm" onclick="fsmReset()">Reset</button>
+      <button class="btn-g btn-sm" onclick="fsmFit()">Fit</button>
+      <span id="fsmTitle" style="margin-left:12px;font-size:13px;font-weight:600;color:var(--txt2)">${teamId?DB.teams.find(t=>t.id===teamId)?.name||'':'All Teams'}</span>
+      <div id="fsmInfo" class="fsmap-info">100%</div>
+    </div>
+    <div class="fsmap-wrap">
+      <svg id="fsmSvg"></svg>
+      <div class="fsmap-tt" id="fsmTT"></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(()=>renderFSMap(),60);
+}
+function closeFullscreenMap(){const o=document.getElementById('fsmapOverlay');if(o){o.style.opacity='0';o.style.transition='opacity .2s';setTimeout(()=>o.remove(),200);}}
+function fsmSelectTeam(teamId,btn){
+  fsmState.teamId=teamId;fsmState.x=0;fsmState.y=0;fsmState.scale=1;
+  document.querySelectorAll('.fsmap-tab').forEach(t=>{t.classList.remove('active');t.style.background='';t.style.borderColor='transparent';});
+  if(btn){btn.classList.add('active');if(teamId){const col=DB.teams.find(t=>t.id===teamId)?.color||'#2563EB';btn.style.borderColor=col;btn.style.background=col+'15';}else{btn.style.borderColor='var(--blue)';btn.style.background='rgba(37,99,235,.1)';}}
+  const tl=document.getElementById('fsmTitle');if(tl)tl.textContent=teamId?DB.teams.find(t=>t.id===teamId)?.name||'':'All Teams';
+  renderFSMap();
+}
+function fsmSelectTeamById(teamId){const btn=Array.from(document.querySelectorAll('.fsmap-tab')).find(b=>b.getAttribute('onclick')&&b.getAttribute('onclick').includes(teamId));fsmSelectTeam(teamId,btn||null);}
+function renderFSMap(){
+  const svg=document.getElementById('fsmSvg');if(!svg)return;
+  const W=svg.parentElement.clientWidth||1200,H=svg.parentElement.clientHeight||700;
+  const tid=fsmState.teamId;
+  function cbez(x1,y1,x2,y2){const cx=(x1+x2)/2;return`M${x1},${y1} C${cx},${y1} ${cx},${y2} ${x2},${y2}`;}
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  let c=`<defs><filter id="fglow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g id="fsmG" transform="translate(${fsmState.x},${fsmState.y}) scale(${fsmState.scale})">`;
+  if(tid){
+    const team=DB.teams.find(t=>t.id===tid);if(!team){c+='</g>';svg.innerHTML=c;return;}
+    const tasks=DB.tasks.filter(t=>t.teamId===tid);
+    const TEAM_X=100,TASK_X=310,SUB_X=540,DOC_X=760;
+    const pos={};
+    const tSp=Math.max(50,Math.min(100,(H-80)/Math.max(tasks.length,1)));
+    const tTH=(tasks.length-1)*tSp,tSY=H/2-tTH/2;
+    tasks.forEach((tk,ti)=>{
+      pos[tk.id]={x:TASK_X,y:tSY+ti*tSp};
+      const subs=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);
+      const sSp=Math.max(24,Math.min(48,(tSp*.88)/Math.max(subs.length,1)));
+      const sSY=(tSY+ti*tSp)-((subs.length-1)*sSp)/2;
+      subs.forEach((st,si)=>{pos[st.id]={x:SUB_X,y:sSY+si*sSp};const types=DB.subDocTypes[st.id]||[];const dc=types.reduce((s,dt)=>s+dt.docs.length,0);pos['dc_'+st.id]={x:DOC_X,y:sSY+si*sSp,docCount:dc};});
+    });
+    const bWT=Math.max(110,team.name.length*7.5+28);
+    const safeT=team.name.replace(/'/g,"\\'");
+    c+=`<g style="cursor:pointer" onclick="closeFullscreenMap();sbTeamClick('${team.id}')" onmouseenter="fsmTT(event,'${safeT}','${tasks.length} tasks')" onmouseleave="fsmHideTT()"><rect x="${TEAM_X-bWT/2}" y="${H/2-22}" width="${bWT}" height="44" rx="12" fill="${team.color}" filter="url(#fglow)"/><text x="${TEAM_X}" y="${H/2+6}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="DM Sans,system-ui">${team.name.length>16?team.name.substring(0,14)+'...':team.name}</text></g>`;
+    tasks.forEach(tk=>{
+      const tp=pos[tk.id];
+      c+=`<path d="${cbez(TEAM_X+bWT/2,H/2,tp.x-55,tp.y)}" fill="none" stroke="${team.color}" stroke-width="1.6" opacity="0.35"/>`;
+      const tkLabel=tk.name.length>16?tk.name.substring(0,14)+'...':tk.name;
+      const tkW=Math.max(85,tkLabel.length*7+20);const safeTk=tk.name.replace(/'/g,"\\'");
+      const subs=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);
+      c+=`<g style="cursor:pointer" onclick="closeFullscreenMap();navTask('${tid}','${tk.id}')" onmouseenter="fsmTT(event,'${safeTk}','${subs.length} subtask${subs.length!==1?'s':''}')" onmouseleave="fsmHideTT()"><rect x="${tp.x-tkW/2}" y="${tp.y-16}" width="${tkW}" height="32" rx="9" fill="${team.color}15" stroke="${team.color}" stroke-width="1.6"/><text x="${tp.x}" y="${tp.y+5}" text-anchor="middle" font-size="11" font-weight="600" fill="${team.color}" font-family="DM Sans,system-ui">${tkLabel}</text></g>`;
+      subs.forEach(st=>{
+        const sp=pos[st.id];const dp=pos['dc_'+st.id];
+        c+=`<path d="${cbez(tp.x+tkW/2,tp.y,sp.x-50,sp.y)}" fill="none" stroke="${team.color}" stroke-width="1.2" opacity="0.25"/>`;
+        const stLabel=st.name.length>15?st.name.substring(0,13)+'...':st.name;
+        const stW=Math.max(75,stLabel.length*6.8+18);const safeSt=st.name.replace(/'/g,"\\'");
+        const dc=dp?dp.docCount:0;
+        c+=`<g style="cursor:pointer" onclick="closeFullscreenMap();navSubtask('${tid}','${tk.id}','${st.id}')" onmouseenter="fsmTT(event,'${safeSt}','${dc} doc${dc!==1?'s':''}')" onmouseleave="fsmHideTT()"><rect x="${sp.x-stW/2}" y="${sp.y-14}" width="${stW}" height="28" rx="8" fill="${team.color}0d" stroke="${team.color}" stroke-width="1.1" stroke-dasharray="3 2"/><text x="${sp.x}" y="${sp.y+4}" text-anchor="middle" font-size="10" font-weight="500" fill="${team.color}" font-family="DM Sans,system-ui">${stLabel}</text></g>`;
+        if(dp&&dc>0){
+          c+=`<path d="${cbez(sp.x+stW/2,sp.y,dp.x-20,dp.y)}" fill="none" stroke="${team.color}" stroke-width="1" opacity="0.18"/>`;
+          c+=`<g onmouseenter="fsmTT(event,'Documents','${dc} total')" onmouseleave="fsmHideTT()"><circle cx="${dp.x}" cy="${dp.y}" r="18" fill="${team.color}20" stroke="${team.color}" stroke-width="1" opacity="0.7"/><text x="${dp.x}" y="${dp.y-3}" text-anchor="middle" font-size="11" font-weight="700" fill="${team.color}" font-family="DM Sans,system-ui">${dc}</text><text x="${dp.x}" y="${dp.y+9}" text-anchor="middle" font-size="7.5" fill="${team.color}" opacity=".7" font-family="DM Sans,system-ui">docs</text></g>`;
+        }
+      });
+    });
+  } else {
+    const teams=DB.teams;
+    const ROOT_X=80,ROOT_Y=H/2,TEAM_X=ROOT_X+200,TASK_X=TEAM_X+210;
+    const tSp=Math.max(56,Math.min(80,(H-60)/Math.max(teams.length,1)));
+    const tTH=(teams.length-1)*tSp,tSY=ROOT_Y-tTH/2;
+    const pos={};pos['root']={x:ROOT_X,y:ROOT_Y};
+    teams.forEach((team,ti)=>{const ty=tSY+ti*tSp;pos[team.id]={x:TEAM_X,y:ty};const tasks=DB.tasks.filter(t=>t.teamId===team.id);const kSp=Math.max(20,Math.min(32,(tSp*.9)/Math.max(tasks.length,1)));const kSY=ty-((tasks.length-1)*kSp)/2;tasks.forEach((tk,ki)=>{pos[tk.id]={x:TASK_X,y:kSY+ki*kSp};});});
+    const rp=pos['root'];
+    teams.forEach(team=>{const tp=pos[team.id];c+=`<path d="${cbez(rp.x+50,rp.y,tp.x-60,tp.y)}" fill="none" stroke="${team.color}" stroke-width="1.8" opacity="0.3"/>`;DB.tasks.filter(t=>t.teamId===team.id).forEach(tk=>{const kp=pos[tk.id];c+=`<path d="${cbez(tp.x+60,tp.y,kp.x-50,kp.y)}" fill="none" stroke="${team.color}" stroke-width="1.2" opacity="0.2"/>`;});});
+    c+=`<g onmouseenter="fsmTT(event,'BGCT Hub','Knowledge System')" onmouseleave="fsmHideTT()"><rect x="${rp.x-46}" y="${rp.y-24}" width="92" height="48" rx="14" fill="#2563EB" filter="url(#fglow)"/><text x="${rp.x}" y="${rp.y-5}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="DM Sans,system-ui">BGCT</text><text x="${rp.x}" y="${rp.y+12}" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.7)" font-family="DM Sans,system-ui">Hub</text></g>`;
+    teams.forEach(team=>{const tp=pos[team.id];const tasks=DB.tasks.filter(t=>t.teamId===team.id);const label=team.name.length>15?team.name.substring(0,13)+'...':team.name;const bW=Math.max(100,label.length*7.2+28);const safe=team.name.replace(/'/g,"\\'");c+=`<g style="cursor:pointer" onclick="fsmSelectTeamById('${team.id}')" onmouseenter="fsmTT(event,'${safe}','${tasks.length} tasks')" onmouseleave="fsmHideTT()"><rect x="${tp.x-bW/2}" y="${tp.y-18}" width="${bW}" height="36" rx="10" fill="${team.color}18" stroke="${team.color}" stroke-width="1.8"/><text x="${tp.x}" y="${tp.y+5}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${team.color}" font-family="DM Sans,system-ui">${label}</text></g>`;});
+    teams.forEach(team=>{DB.tasks.filter(t=>t.teamId===team.id).forEach(tk=>{const kp=pos[tk.id];const subs=(DB.subtasks||[]).filter(s=>s.taskId===tk.id);const dc=subs.reduce((sum,st)=>(DB.subDocTypes[st.id]||[]).reduce((s,dt)=>s+dt.docs.length,sum),0);const label=tk.name.length>16?tk.name.substring(0,14)+'...':tk.name;const bW=Math.max(72,label.length*6.5+20);const safe=tk.name.replace(/'/g,"\\'");const filled=dc>0;c+=`<g style="cursor:pointer" onclick="fsmSelectTeamById('${team.id}')" onmouseenter="fsmTT(event,'${safe}','${dc} doc${dc!==1?'s':''}')" onmouseleave="fsmHideTT()"><rect x="${kp.x-bW/2}" y="${kp.y-13}" width="${bW}" height="26" rx="7" fill="${filled?team.color+'12':'transparent'}" stroke="${team.color}" stroke-width="${filled?1.4:.8}" stroke-dasharray="${filled?'none':'3 2'}" opacity="${filled?1:.65}"/><text x="${kp.x}" y="${kp.y+5}" text-anchor="middle" font-size="9.5" font-weight="${filled?600:400}" fill="${team.color}" font-family="DM Sans,system-ui">${label}</text></g>`;});});
+  }
+  c+='</g>';svg.innerHTML=c;
+  svg.onmousedown=e=>{if(e.target.closest('g[onclick]'))return;fsmState.pan=true;fsmState.px=e.clientX;fsmState.py=e.clientY;fsmState.ox=fsmState.x;fsmState.oy=fsmState.y;svg.style.cursor='grabbing';};
+  svg.onwheel=e=>{e.preventDefault();fsmState.scale=Math.max(.1,Math.min(4,fsmState.scale*(e.deltaY>0?.9:1.1)));applyFSM();};
+  if(window._fsmMM)window.removeEventListener('mousemove',window._fsmMM);
+  if(window._fsmMU)window.removeEventListener('mouseup',window._fsmMU);
+  window._fsmMM=e=>{if(!fsmState.pan)return;fsmState.x=fsmState.ox+(e.clientX-fsmState.px);fsmState.y=fsmState.oy+(e.clientY-fsmState.py);applyFSM();};
+  window._fsmMU=()=>{fsmState.pan=false;const s=document.getElementById('fsmSvg');if(s)s.style.cursor='';};
+  window.addEventListener('mousemove',window._fsmMM);window.addEventListener('mouseup',window._fsmMU);
+}
+function applyFSM(){const g=document.getElementById('fsmG');if(g)g.setAttribute('transform',`translate(${fsmState.x},${fsmState.y}) scale(${fsmState.scale})`);const z=document.getElementById('fsmInfo');if(z)z.textContent=Math.round(fsmState.scale*100)+'%';}
+function fsmZoom(f){fsmState.scale=Math.max(.1,Math.min(4,fsmState.scale*f));applyFSM();}
+function fsmReset(){fsmState.x=0;fsmState.y=0;fsmState.scale=1;applyFSM();}
+function fsmFit(){fsmState.x=20;fsmState.y=0;fsmState.scale=.75;applyFSM();}
+function fsmTT(e,title,sub){const tt=document.getElementById('fsmTT');if(!tt)return;const r=tt.parentElement.getBoundingClientRect();tt.innerHTML=`<div class="mtt-title">${title}</div><div class="mtt-sub">${sub}</div>`;tt.style.left=(e.clientX-r.left+14)+'px';tt.style.top=(e.clientY-r.top+14)+'px';tt.classList.add('show');}
+function fsmHideTT(){const tt=document.getElementById('fsmTT');if(tt)tt.classList.remove('show');}
 function showTT(e,title,sub){const tt=document.getElementById('mapTT');if(!tt)return;const r=tt.parentElement.getBoundingClientRect();tt.innerHTML=`<div class="mtt-title">${title}</div><div class="mtt-sub">${sub}</div>`;tt.style.left=(e.clientX-r.left+14)+'px';tt.style.top=(e.clientY-r.top+14)+'px';tt.classList.add('show');}
 function hideTT(){const tt=document.getElementById('mapTT');if(tt)tt.classList.remove('show');}
+
 
 /* ══ SEARCH ══ */
 function openSearch(){document.getElementById('searchDrop').classList.add('open');}
@@ -1402,7 +1608,94 @@ function quickLink(taskId){
   },'Save All');
 }
 
-/* ══ GOOGLE SHEETS SYNC — POST METHOD ══ */
+/* ══ SUBTASK CRUD ══ */
+function addSubtask(teamId,taskId){
+  qModal('Add Subtask',`<div class="f-row"><label class="f-label">Subtask Name</label><input class="f-input" id="q-n" placeholder="e.g. Standard Process, Advanced, Phase 1…"></div>`,()=>{
+    const name=document.getElementById('q-n').value.trim();
+    if(!name){toast('Name required.','err');return false;}
+    if(!DB.subtasks)DB.subtasks=[];
+    const id='st'+Date.now();
+    DB.subtasks.push({id,taskId,name});
+    if(!DB.subDocTypes)DB.subDocTypes={};
+    DB.subDocTypes[id]=seedTypes(id);
+    save();refreshPage();renderSidebar();return true;
+  });
+}
+function delSubtask(teamId,taskId,subtaskId){
+  if(!confirm('Delete this subtask and all its documents?'))return;
+  DB.subtasks=(DB.subtasks||[]).filter(s=>s.id!==subtaskId);
+  delete DB.subDocTypes[subtaskId];
+  save();nav=nav.filter(n=>n.subtaskId!==subtaskId);
+  renderSidebar();navTask(teamId,taskId);toast('Subtask deleted.','ok');
+}
+function addTypeSub(subtaskId){
+  qModal('Add Document Type',`
+    <div class="f-row"><label class="f-label">Type Name</label><input class="f-input" id="q-n" placeholder="e.g. BGCT, SOP, Policy, KPI Guide…"></div>
+    <div class="f-row"><label class="f-label">Colour</label><div class="chips" id="qC">${PAL.map((c,i)=>`<div class="chip ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickChip(this,'qC')"></div>`).join('')}</div></div>
+  `,()=>{
+    const name=document.getElementById('q-n').value.trim();
+    const chip=document.querySelector('#qC .chip.sel');
+    if(!name){toast('Name required.','err');return false;}
+    if(!DB.subDocTypes[subtaskId])DB.subDocTypes[subtaskId]=[];
+    DB.subDocTypes[subtaskId].push({id:'dt'+Date.now(),name,color:chip?chip.dataset.c:PAL[0],docs:[]});
+    save();refreshPage();return true;
+  });
+}
+function delTypeSub(subtaskId,dtId){if(!confirm('Delete this type and all its docs?'))return;DB.subDocTypes[subtaskId]=(DB.subDocTypes[subtaskId]||[]).filter(t=>t.id!==dtId);save();refreshPage();toast('Type deleted.','ok');}
+function addDocSub(subtaskId,dtId){
+  const types=DB.subDocTypes[subtaskId]||[];
+  if(!types.length){toast('Add a document type first.','err');return;}
+  qModal('Add Document',`
+    <div class="f-row"><label class="f-label">Document Type</label><select class="f-sel" id="q-dt">${types.map(dt=>`<option value="${dt.id}" ${dt.id===dtId?'selected':''}>${dt.name}</option>`).join('')}</select></div>
+    <div class="f-row"><label class="f-label">Name *</label><input class="f-input" id="q-n" placeholder="Document name"></div>
+    <div class="f-row"><label class="f-label">Google Drive Link</label><input class="f-input" id="q-l" placeholder="https://drive.google.com/…"></div>
+    <div class="f-row"><label class="f-label">Description</label><textarea class="f-ta" id="q-d" placeholder="Optional…"></textarea></div>
+  `,()=>{
+    const dtid=document.getElementById('q-dt').value;
+    const name=document.getElementById('q-n').value.trim();
+    const link=document.getElementById('q-l').value.trim();
+    const desc=document.getElementById('q-d').value.trim();
+    if(!name){toast('Name required.','err');return false;}
+    const dt=(DB.subDocTypes[subtaskId]||[]).find(t=>t.id===dtid);
+    if(!dt){toast('Invalid type.','err');return false;}
+    dt.docs.push({id:'doc'+Date.now(),name,link:link||'#',desc});
+    save();refreshPage();return true;
+  });
+}
+function editDocSub(subtaskId,dtId,docId){
+  const dt=(DB.subDocTypes[subtaskId]||[]).find(t=>t.id===dtId);
+  const doc=dt?.docs.find(d=>d.id===docId);
+  if(!doc)return;
+  qModal('Edit Document',`
+    <div class="f-row"><label class="f-label">Name *</label><input class="f-input" id="q-n" value="${doc.name}"></div>
+    <div class="f-row"><label class="f-label">Google Drive Link</label><input class="f-input" id="q-l" value="${doc.link!=='#'?doc.link:''}"></div>
+    <div class="f-row"><label class="f-label">Description</label><textarea class="f-ta" id="q-d">${doc.desc||''}</textarea></div>
+  `,()=>{
+    const name=document.getElementById('q-n').value.trim();
+    const link=document.getElementById('q-l').value.trim();
+    const desc=document.getElementById('q-d').value.trim();
+    if(!name){toast('Name required.','err');return false;}
+    doc.name=name;doc.link=link||'#';doc.desc=desc;
+    save();refreshPage();return true;
+  },'Save Changes');
+}
+function delDocSub(subtaskId,dtId,docId){if(!confirm('Delete this document?'))return;const dt=(DB.subDocTypes[subtaskId]||[]).find(t=>t.id===dtId);if(dt)dt.docs=dt.docs.filter(d=>d.id!==docId);save();refreshPage();toast('Deleted.','ok');}
+function quickLinkSub(subtaskId,dtId,docId){
+  const types=DB.subDocTypes[subtaskId]||[];
+  const items=types.flatMap(dt=>dt.docs.map(doc=>`
+    <div class="ql-row">
+      <div class="ql-dot" style="background:${dt.color}"></div>
+      <div class="ql-label">${dt.name} — ${doc.name}</div>
+      <input class="ql-inp" id="ql-${doc.id}" value="${doc.link&&doc.link!=='#'?doc.link:''}" placeholder="Paste Drive link…">
+    </div>`)).join('');
+  if(!items){toast('No documents yet.','err');return;}
+  qModal('Quick Edit Links',`<div class="ql-list">${items}</div>`,()=>{
+    types.forEach(dt=>dt.docs.forEach(doc=>{const el=document.getElementById('ql-'+doc.id);if(el)doc.link=el.value.trim()||'#';}));
+    save();refreshPage();return true;
+  },'Save All');
+}
+
+/* ══ FULLSCREEN MAP ══ */
 function saveGs(){
   const url=document.getElementById('gsU')?.value.trim();
   GS_URL=url;localStorage.setItem('bgct_gs_url',url);
@@ -1448,7 +1741,7 @@ async function pullFromSheets(){
     const res=await fetch(GS_URL+'?action=load',{redirect:'follow'});
     const text=await res.text();
     const data=JSON.parse(text);
-    if(data&&data.teams){DB=data;save();renderSidebar();refreshPage();toast('Loaded from Sheets ✓','ok');}
+    if(data&&data.teams){DB=data;if(!DB.subtasks)DB.subtasks=[];if(!DB.subDocTypes)DB.subDocTypes={};save();renderSidebar();refreshPage();toast('Loaded from Sheets ✓','ok');}
     else toast('Error: '+(data.error||'No data'),'err');
   }catch(e){toast('Load failed: '+e.message,'err');}
 }
