@@ -502,14 +502,19 @@ input,select,textarea{font-family:var(--ff)}
 .fsmap-tt{position:absolute;pointer-events:none;background:var(--surf);border:1px solid var(--brd);border-radius:10px;padding:10px 14px;font-size:12px;display:none;z-index:50;min-width:140px;box-shadow:var(--sh)}
 .fsmap-tt.show{display:block}
 .fsmap-info{position:absolute;bottom:14px;right:14px;background:var(--surf);border:1px solid var(--brd);border-radius:8px;padding:5px 12px;font-size:11px;color:var(--txt2);font-weight:500}
-  display:flex;align-items:center;gap:8px;
-  padding:10px 14px;border-radius:9px;
+
+/* ── SYNC STATUS ── */
+.sync-status{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border-radius:8px;
   font-size:12px;font-weight:500;
-  background:var(--bg2);border:1px solid var(--brd);
-  color:var(--txt2);margin-bottom:14px;
+  background:var(--surf2);border:1px solid var(--brd);
+  color:var(--txt2);margin-bottom:18px;
+  width:fit-content;
 }
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--txt3);flex-shrink:0}
-.sync-dot.ok{background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.2)}
+.sync-status.connected{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.18);color:rgba(134,239,172,.85);}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--txt3);flex-shrink:0}
+.sync-dot.ok{background:#22C55E;}
 .sync-dot.err{background:#EF4444}
 
 /* ── TOAST ── */
@@ -1466,33 +1471,44 @@ function openAdmin(defTab='teams',preTeam=''){
             <div class="f-row"><label class="f-label">Team</label><select class="f-sel" id="dTs" onchange="loadDocTasks()">${teamOpts()}</select></div>
             <div class="f-row"><label class="f-label">Task</label><select class="f-sel" id="dTks" onchange="loadDocTypes()"><option>Select team first</option></select></div>
           </div>
-          <div class="f-row"><label class="f-label">Document Type</label><select class="f-sel" id="dDts"><option>Select task first</option></select></div>
+          <div class="f-row"><label class="f-label">Document Type</label><select class="f-sel" id="dDts" onchange="loadDocList()"><option>Select task first</option></select></div>
           <div class="f-g2">
             <div class="f-row"><label class="f-label">Document Name *</label><input class="f-input" id="dN" placeholder="e.g. Listing Creation BGCT"></div>
             <div class="f-row"><label class="f-label">Google Drive Link</label><input class="f-input" id="dL" placeholder="https://drive.google.com/…"></div>
           </div>
           <div class="f-row"><label class="f-label">Description (optional)</label><textarea class="f-ta" id="dDe" placeholder="Brief description…"></textarea></div>
-          <button class="btn-p btn-sm" onclick="addDocAdmin()">${IC.plus} Add Document</button>
+          <button class="btn-p btn-sm" onclick="addDocAdmin()" style="margin-bottom:20px">${IC.plus} Add Document</button>
+          <hr class="hr" style="margin-top:0">
+          <p style="font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:10px">Existing Documents</p>
+          <table class="dt-tbl"><thead><tr><th>Name</th><th>Type</th><th>Link</th><th></th></tr></thead><tbody id="docListT"><tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:12px;font-size:12px">Select a team, task and type above</td></tr></tbody></table>
         </div>
         <div class="a-sec ${defTab==='settings'?'active':''}" id="as-settings">
-          <div class="sync-status" id="syncStatus"><div class="sync-dot ${GS_URL?'ok':''}"></div>${GS_URL?'Google Sheets connected':'Not connected to Google Sheets'}</div>
+          <div class="sync-status ${GS_URL?'connected':''}" id="syncStatus">
+            <div class="sync-dot ${GS_URL?'ok':''}"></div>
+            <span>${GS_URL?'Google Sheets connected':'Not connected to Google Sheets'}</span>
+          </div>
           <div class="f-row">
             <label class="f-label">Google Apps Script URL</label>
             <input class="f-input" id="gsU" value="${GS_URL}" placeholder="https://script.google.com/macros/s/…/exec">
             <div class="f-hint">Paste your deployed Apps Script Web App URL here.</div>
           </div>
-          <button class="btn-p btn-sm" onclick="saveGs()" style="margin-bottom:16px">Save URL</button>
-          <button class="btn-g btn-sm" onclick="testConnection()" style="margin-bottom:20px">Test Connection</button>
-          <hr class="hr" style="margin-top:0">
+          <div style="display:flex;gap:8px;margin-bottom:20px">
+            <button class="btn-p btn-sm" onclick="saveGs()">Save URL</button>
+            <button class="btn-g btn-sm" onclick="testConnection()">Test Connection</button>
+          </div>
+          <hr class="hr">
           <p style="font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:10px">Sync Data</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
             ${isAdmin()?`<button class="btn-p btn-sm" onclick="syncToSheets()">${IC.sync} Push to Sheets</button>`:''}
             <button class="btn-g btn-sm" onclick="pullFromSheets()">${IC.sync} Pull from Sheets</button>
           </div>
           ${isAdmin()?`<hr class="hr">
-          <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:10px;padding:16px">
-            <div style="font-size:12px;font-weight:700;color:#EF4444;margin-bottom:8px;display:flex;align-items:center;gap:6px">${IC.warn} Danger Zone</div>
-            <button class="btn-d btn-sm" onclick="resetSample()">Reset to Sample Data</button>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.12);border-radius:10px">
+            <div>
+              <div style="font-size:11.5px;font-weight:700;color:#F87171;letter-spacing:.02em;text-transform:uppercase;margin-bottom:3px">Danger Zone</div>
+              <div style="font-size:11px;color:var(--txt3)">Irreversibly resets all data to sample content</div>
+            </div>
+            <button class="btn-d btn-sm" onclick="resetSample()" style="flex-shrink:0">Reset Data</button>
           </div>`:''}
         </div>
       </div>
@@ -1506,17 +1522,44 @@ function pickChip(el,cid){document.querySelectorAll('#'+cid+' .chip').forEach(c=
 
 /* ══ CRUD ══ */
 function teamsRows(){return DB.teams.map(t=>`<tr><td><span class="color-dot" style="background:${t.color};margin-right:6px"></span><span class="td-p">${t.name}</span></td><td>${DB.tasks.filter(tk=>tk.teamId===t.id).length}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameTeam('${t.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delTeam('${t.id}')">${IC.trash}</button></div></td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No teams</td></tr>';}
-function tasksRows(){return DB.tasks.map(tk=>{const team=DB.teams.find(t=>t.id===tk.teamId);const dc=(DB.docTypes[tk.id]||[]).reduce((s,t)=>s+t.docs.length,0);return`<tr><td class="td-p">${tk.name}</td><td><span style="font-size:11px;background:${team?.color}20;color:${team?.color};padding:2px 8px;border-radius:4px;font-weight:600">${team?.name||''}</span></td><td>${dc}</td><td><button class="btn-d btn-sm" onclick="delTask('${tk.id}')">${IC.trash}</button></td></tr>`;}).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No tasks</td></tr>';}
+function tasksRows(){return DB.tasks.map(tk=>{const team=DB.teams.find(t=>t.id===tk.teamId);const dc=(DB.docTypes[tk.id]||[]).reduce((s,t)=>s+t.docs.length,0);return`<tr><td class="td-p">${tk.name}</td><td><span style="font-size:11px;background:${team?.color}20;color:${team?.color};padding:2px 8px;border-radius:4px;font-weight:600">${team?.name||''}</span></td><td>${dc}</td><td><div class="td-acts"><button class="btn-g btn-sm" onclick="renameTask('${tk.id}')">${IC.edit}</button><button class="btn-d btn-sm" onclick="delTask('${tk.id}')">${IC.trash}</button></div></td></tr>`;}).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:16px;font-size:12px">No tasks</td></tr>';}
 function teamOpts(pre=''){return DB.teams.map(t=>`<option value="${t.id}" ${t.id===pre?'selected':''}>${t.name}</option>`).join('');}
 function loadDocTasks(){const tid=document.getElementById('dTs')?.value;const tasks=DB.tasks.filter(t=>t.teamId===tid);const sel=document.getElementById('dTks');if(sel)sel.innerHTML=tasks.map(t=>`<option value="${t.id}">${t.name}</option>`).join('')||'<option>No tasks</option>';loadDocTypes();}
-function loadDocTypes(){const tkid=document.getElementById('dTks')?.value;const sel=document.getElementById('dDts');if(!sel||!tkid)return;const types=DB.docTypes[tkid]||[];sel.innerHTML=types.map(dt=>`<option value="${dt.id}">${dt.name}</option>`).join('')||'<option>No types</option>';}
+function loadDocTypes(){const tkid=document.getElementById('dTks')?.value;const sel=document.getElementById('dDts');if(!sel||!tkid)return;const types=DB.docTypes[tkid]||[];sel.innerHTML=types.map(dt=>`<option value="${dt.id}">${dt.name}</option>`).join('')||'<option>No types</option>';loadDocList();}
+function loadDocList(){
+  const tkid=document.getElementById('dTks')?.value;
+  const dtid=document.getElementById('dDts')?.value;
+  const tb=document.getElementById('docListT');if(!tb)return;
+  if(!tkid||!dtid){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:12px;font-size:12px">Select a team, task and type above</td></tr>';return;}
+  const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);
+  if(!dt||!dt.docs.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:12px;font-size:12px">No documents yet</td></tr>';return;}
+  tb.innerHTML=dt.docs.map(doc=>`<tr>
+    <td class="td-p">${doc.name}</td>
+    <td><span style="font-size:11px;background:${dt.color}20;color:${dt.color};padding:2px 8px;border-radius:4px;font-weight:600">${dt.name}</span></td>
+    <td style="font-size:11px;color:var(--txt3);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${doc.link&&doc.link!=='#'?'<span style="color:var(--blue)">Linked</span>':'<span style="opacity:.4">No link</span>'}</td>
+    <td><div class="td-acts">
+      <button class="btn-g btn-sm" onclick="editDocAdmin('${tkid}','${dtid}','${doc.id}')">${IC.edit}</button>
+      <button class="btn-d btn-sm" onclick="delDocAdmin('${tkid}','${dtid}','${doc.id}')">${IC.trash}</button>
+    </div></td>
+  </tr>`).join('');
+}
 
 function addTeam(){const name=document.getElementById('aN')?.value.trim();if(!name){toast('Enter a name.','err');return;}if(DB.teams.find(t=>t.name.toLowerCase()===name.toLowerCase())){toast('Already exists.','err');return;}const chip=document.querySelector('#aC .chip.sel');DB.teams.push({id:'t'+Date.now(),name,color:chip?chip.dataset.c:PAL[0]});save();document.getElementById('aN').value='';const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();toast('Team added!','ok');}
 function renameTeam(id){const team=DB.teams.find(t=>t.id===id);if(!team)return;const n=prompt('Rename team:',team.name);if(n&&n.trim()){team.name=n.trim();save();const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();toast('Renamed!','ok');}}
 function delTeam(id){if(!confirm('Delete team and all its tasks/docs?'))return;DB.tasks.filter(t=>t.teamId===id).forEach(t=>{delete DB.docTypes[t.id];});DB.tasks=DB.tasks.filter(t=>t.teamId!==id);DB.teams=DB.teams.filter(t=>t.id!==id);save();const tb=document.getElementById('tT');if(tb)tb.innerHTML=teamsRows();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Deleted.','ok');}
 function addTask(){const tid=document.getElementById('tkTs')?.value;const name=document.getElementById('tkN')?.value.trim();if(!tid||!name){toast('Select team and enter name.','err');return;}const id='tk'+Date.now();DB.tasks.push({id,teamId:tid,name});DB.docTypes[id]=seedTypes(id);save();document.getElementById('tkN').value='';const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Task added!','ok');}
+function renameTask(id){const tk=DB.tasks.find(t=>t.id===id);if(!tk)return;const n=prompt('Rename task:',tk.name);if(n&&n.trim()){tk.name=n.trim();save();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Renamed!','ok');}}
 function delTask(id){if(!confirm('Delete task and all its docs?'))return;delete DB.docTypes[id];DB.tasks=DB.tasks.filter(t=>t.id!==id);save();const tkb=document.getElementById('tkT');if(tkb)tkb.innerHTML=tasksRows();toast('Deleted.','ok');}
-function addDocAdmin(){const tkid=document.getElementById('dTks')?.value;const dtid=document.getElementById('dDts')?.value;const name=document.getElementById('dN')?.value.trim();const link=document.getElementById('dL')?.value.trim();const desc=document.getElementById('dDe')?.value.trim();if(!tkid||!dtid||!name){toast('Fill required fields.','err');return;}const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);if(!dt){toast('Invalid type.','err');return;}dt.docs.push({id:'doc'+Date.now(),name,link:link||'#',desc:desc||''});save();['dN','dL','dDe'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});toast('Document added!','ok');}
+function addDocAdmin(){const tkid=document.getElementById('dTks')?.value;const dtid=document.getElementById('dDts')?.value;const name=document.getElementById('dN')?.value.trim();const link=document.getElementById('dL')?.value.trim();const desc=document.getElementById('dDe')?.value.trim();if(!tkid||!dtid||!name){toast('Fill required fields.','err');return;}const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);if(!dt){toast('Invalid type.','err');return;}dt.docs.push({id:'doc'+Date.now(),name,link:link||'#',desc:desc||''});save();['dN','dL','dDe'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});loadDocList();toast('Document added!','ok');}
+function editDocAdmin(tkid,dtid,docId){
+  const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);
+  const doc=dt?.docs.find(d=>d.id===docId);if(!doc)return;
+  const name=prompt('Document name:',doc.name);if(!name||!name.trim())return;
+  const link=prompt('Google Drive link (leave blank to clear):',doc.link!=='#'?doc.link:'');
+  doc.name=name.trim();doc.link=link?.trim()||'#';
+  save();loadDocList();toast('Document updated!','ok');
+}
+function delDocAdmin(tkid,dtid,docId){if(!confirm('Delete this document?'))return;const dt=(DB.docTypes[tkid]||[]).find(t=>t.id===dtid);if(dt)dt.docs=dt.docs.filter(d=>d.id!==docId);save();loadDocList();toast('Deleted.','ok');}
 
 /* ══ QUICK MODALS ══ */
 function qModal(title,body,onSave,saveLbl='Save'){
@@ -1701,7 +1744,7 @@ function saveGs(){
   const url=document.getElementById('gsU')?.value.trim();
   GS_URL=url;localStorage.setItem('bgct_gs_url',url);
   const dot=document.getElementById('syncStatus');
-  if(dot)dot.innerHTML=`<div class="sync-dot ${url?'ok':''}"></div>${url?'Google Sheets connected':'Not connected'}`;
+  if(dot){dot.className='sync-status'+(url?' connected':'');dot.innerHTML=`<div class="sync-dot ${url?'ok':''}"></div><span>${url?'Google Sheets connected':'Not connected to Google Sheets'}</span>`;}
   toast('URL saved!','ok');
 }
 
